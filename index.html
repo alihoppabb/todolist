@@ -671,8 +671,30 @@
   setInterval(()=>{ tick(); if(todayStr()!==curDay){ curDay=todayStr(); setDate(); render(); } }, 1000);
 
   /* ── старт ── */
-  setDate(); tick(); buildLists(); buildSelList(); render(); save();
+  setDate(); tick(); buildLists(); buildSelList(); render();
   $('#titleInp').focus();
+
+  /* ── облачная синхронизация ── */
+  try{
+    const firebaseConfig =  {
+  apiKey: "AIzaSyBHQOc7gWOlTFdJ37-0FgJ6wYKDE-yXojo",
+  authDomain: "my-todo-eead0.firebaseapp.com",
+  projectId: "my-todo-eead0",
+  storageBucket: "my-todo-eead0.firebasestorage.app",
+  messagingSenderId: "93201171571",
+  appId: "1:93201171571:web:eab3623044e4a248e1d606",
+  measurementId: "G-DLM75CNSBB"
+};
+    firebase.initializeApp(firebaseConfig);
+    const __ref = firebase.firestore().collection('todolist').doc('state');
+    window.__cloudRef = __ref;
+    __ref.onSnapshot(function(snap){
+      if(snap.exists){ state.tasks = snap.data().tasks || []; }
+      else { __ref.set({ tasks: state.tasks }); }
+      try{ localStorage.setItem(LS, JSON.stringify(state.tasks)); }catch(e){}
+      render();
+    }, function(){});
+  }catch(e){ console.warn('синхронизация недоступна', e); }
 })();
 </script>
 <script>
