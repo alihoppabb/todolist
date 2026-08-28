@@ -366,7 +366,10 @@
       {id:uid(), title:'Составить план спринта',                  done:true,  priority:'mid',  list:'work',     date:null,    created:Date.now()}
     ];
   }
-  function save(){ try{ localStorage.setItem(LS, JSON.stringify(state.tasks)); }catch(e){} }
+  function save(){
+    try{ localStorage.setItem(LS, JSON.stringify(state.tasks)); }catch(e){}
+    if(window.__cloudRef){ window.__cloudRef.set({ tasks: state.tasks }).catch(function(){}); }
+  }
   function uid(){ return (crypto.randomUUID ? crypto.randomUUID() : 'id'+Date.now()+Math.random()); }
   const esc = s => s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
