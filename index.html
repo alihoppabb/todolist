@@ -8,7 +8,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;800&family=Golos+Text:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
-<link rel="manifest" href="manifest.json">
 <style>
   :root{
     --paper:#EEF1F5; --card:#FFFFFF; --ink:#0F1B2D; --ink2:#54637A; --line:rgba(15,27,45,.15);
@@ -30,7 +29,6 @@
   button{font-family:inherit; cursor:pointer}
   input,select{font-family:inherit}
 
-  /* ── плавающие фигуры фона ── */
   .float{position:fixed; pointer-events:none; z-index:0; opacity:.5}
   .f1{width:150px;height:150px;border:2px dashed rgba(15,27,45,.18);border-radius:50%;top:14%;right:6%;animation:spin 60s linear infinite}
   .f2{width:84px;height:84px;border:2px solid rgba(229,72,77,.28);border-radius:20px;bottom:10%;left:4%;animation:floaty 11s ease-in-out infinite alternate}
@@ -40,7 +38,6 @@
 
   .app{position:relative; z-index:1; max-width:1180px; margin:0 auto; padding:34px 24px 60px}
 
-  /* ── шапка ── */
   .head{display:flex; justify-content:space-between; align-items:flex-start; gap:24px; margin-bottom:30px; animation:rise .6s cubic-bezier(.2,.9,.3,1) both}
   .brand{display:flex; align-items:center; gap:10px; font-family:var(--disp); font-weight:800; font-size:15px; letter-spacing:.06em}
   .brand-star{display:inline-grid; place-items:center; width:32px; height:32px; background:var(--ink); color:var(--amber); border-radius:10px; font-size:17px; animation:spin 24s linear infinite}
@@ -61,7 +58,6 @@
   .layout{display:grid; grid-template-columns:284px 1fr; gap:26px; align-items:start}
   .card{background:var(--card); border:1.5px solid var(--line); border-radius:16px; box-shadow:0 1px 2px rgba(15,27,45,.05), 0 14px 30px -20px rgba(15,27,45,.25)}
 
-  /* ── сайдбар ── */
   .side{position:sticky; top:22px; display:flex; flex-direction:column; gap:16px; animation:rise .6s .08s cubic-bezier(.2,.9,.3,1) both}
   .progress-card{padding:18px; display:flex; gap:16px; align-items:center}
   .ring-wrap{position:relative; width:96px; height:96px; flex:none}
@@ -85,7 +81,6 @@
   .tip{padding:14px 16px; font-size:12.5px; line-height:1.55; color:var(--ink2); border-left:4px solid var(--amber)}
   .tip b{color:var(--ink)}
 
-  /* ── композер ── */
   .main{display:flex; flex-direction:column; gap:16px; min-width:0; animation:rise .6s .14s cubic-bezier(.2,.9,.3,1) both}
   .composer{padding:16px}
   .c-row1{display:flex; align-items:center; gap:12px}
@@ -112,7 +107,6 @@
   .shake{animation:shake .35s}
   @keyframes shake{20%,60%{transform:translateX(-5px)}40%,80%{transform:translateX(5px)}}
 
-  /* ── тулбар ── */
   .toolbar{display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; align-items:center}
   .chips{display:flex; gap:8px; flex-wrap:wrap}
   .chip{border:1.5px solid var(--line); background:var(--card); border-radius:99px; padding:8px 15px; font-size:13px; font-weight:600; color:var(--ink2); transition:all .18s}
@@ -125,7 +119,6 @@
 
   .board-head{font-family:var(--mono); font-size:11px; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:var(--ink2); margin:4px 2px 0}
 
-  /* ── задачи ── */
   .tasks{list-style:none; display:flex; flex-direction:column; gap:10px; margin-top:10px}
   .task{display:flex; align-items:flex-start; gap:12px; background:var(--card); border:1.5px solid var(--line); border-radius:14px; padding:13px 14px; position:relative; transition:transform .2s, box-shadow .2s, border-color .2s, opacity .35s; animation:taskIn .45s cubic-bezier(.2,.9,.3,1) both}
   @keyframes taskIn{from{opacity:0; transform:translateY(-12px) scale(.98)}to{opacity:1; transform:none}}
@@ -176,7 +169,6 @@
 
   .foot{text-align:center; font-family:var(--mono); font-size:11px; letter-spacing:.1em; color:var(--ink2); margin-top:44px}
 
-  /* ── тост и конфетти ── */
   .toast{position:fixed; left:50%; bottom:26px; transform:translate(-50%,140%); background:var(--ink); color:#fff; border-radius:13px; padding:13px 18px; display:flex; align-items:center; gap:16px; font-size:14px; font-weight:500; box-shadow:0 14px 40px -10px rgba(15,27,45,.5); transition:transform .4s cubic-bezier(.2,.9,.3,1); z-index:60; max-width:90vw}
   .toast.show{transform:translate(-50%,0)}
   .toast button{border:0; background:var(--amber); color:var(--ink); font-weight:700; border-radius:8px; padding:7px 14px; font-size:13px}
@@ -203,7 +195,6 @@
   <div class="float f1"></div><div class="float f2"></div><div class="float f3"></div>
 
   <div class="app">
-    <!-- ШАПКА -->
     <header class="head">
       <div>
         <div class="brand"><span class="brand-star">✳</span>ФОКУС <span class="brand-sub">рабочий планировщик</span></div>
@@ -227,7 +218,6 @@
     </header>
 
     <div class="layout">
-      <!-- САЙДБАР -->
       <aside class="side">
         <div class="card progress-card">
           <div class="ring-wrap">
@@ -254,7 +244,6 @@
         </div>
       </aside>
 
-      <!-- ОСНОВНАЯ КОЛОНКА -->
       <main class="main">
         <form class="card composer" id="composer" autocomplete="off">
           <div class="c-row1">
@@ -318,12 +307,14 @@
       </main>
     </div>
 
-    <footer class="foot">данные хранятся локально в вашем браузере · фокус © 2026</footer>
+    <footer class="foot">данные хранятся в облаке и локально · фокус © 2026</footer>
   </div>
 
   <div class="toast" id="toast"><span id="toastMsg"></span><button id="toastAct" hidden></button></div>
   <div id="confetti"></div>
 
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script>
 (function(){
   'use strict';
@@ -344,13 +335,11 @@
   };
   const FILTER_LABEL = {all:'Все активные', today:'Сегодня', plan:'Запланировано', done:'Выполненные'};
 
-  /* ── даты ── */
   const iso = d => { const p=n=>String(n).padStart(2,'0'); return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate()); };
   const todayStr = () => iso(new Date());
   const addDays = n => { const d=new Date(); d.setDate(d.getDate()+n); return iso(d); };
   const fmtShort = s => new Date(s+'T00:00').toLocaleDateString('ru-RU',{day:'numeric',month:'short'});
 
-  /* ── состояние ── */
   let state = { tasks: load(), list:'all', filter:'all', q:'' };
   let composer = { list:'work', priority:'mid', date:'' };
   let flashId = null, dragId = null, toastTimer = null;
@@ -373,7 +362,6 @@
   function uid(){ return (crypto.randomUUID ? crypto.randomUUID() : 'id'+Date.now()+Math.random()); }
   const esc = s => s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
-  /* ── шапка: время, дата, приветствие ── */
   function setDate(){
     const d = new Date(), h = d.getHours();
     const g = h>=5&&h<12 ? 'Доброе утро' : h>=12&&h<17 ? 'Добрый день' : h>=17&&h<23 ? 'Добрый вечер' : 'Доброй ночи';
@@ -387,7 +375,6 @@
     $('#clock').innerHTML = '<b>'+p(d.getHours())+'</b><span class="cblink">:</span><b>'+p(d.getMinutes())+'</b><span class="cblink">:</span><b>'+p(d.getSeconds())+'</b>';
   }
 
-  /* ── сайдбар: списки ── */
   function buildLists(){
     const box = $('#listsBox');
     let html = '<button class="l-item active" data-list="all"><span class="dot" style="background:var(--ink)"></span><span class="l-name">Все списки</span><span class="cnt" data-cnt="all">0</span></button>';
@@ -407,7 +394,6 @@
     $('#selList').value = composer.list;
   }
 
-  /* ── фильтрация ── */
   function inScope(t){
     if(state.list!=='all' && t.list!==state.list) return false;
     if(state.q && !t.title.toLowerCase().includes(state.q.trim().toLowerCase())) return false;
@@ -420,7 +406,6 @@
     return true;
   }
 
-  /* ── шаблон задачи ── */
   function dateMeta(t){
     if(!t.date) return null;
     const td = todayStr();
@@ -475,7 +460,6 @@
     flashId = fromId; save(); render();
   }
 
-  /* ── действия ── */
   function toggle(id){
     const openBefore = state.tasks.filter(t=>!t.done).length;
     const t = state.tasks.find(x=>x.id===id); if(!t) return;
@@ -511,7 +495,6 @@
     inp.addEventListener('blur', ()=>commit(false));
   }
 
-  /* ── рендер ── */
   function render(){
     const ul = $('#taskList'), dl = $('#doneList');
     const isDoneView = state.filter==='done';
@@ -535,7 +518,6 @@
       ? 'Готово · ' + doneArr.length
       : FILTER_LABEL[state.filter] + ' · ' + active.length;
 
-    /* пустое состояние */
     const empty = $('#empty');
     const nothing = (isDoneView ? doneArr.length : active.length + doneArr.length) === 0;
     empty.hidden = !nothing;
@@ -543,7 +525,7 @@
       if(state.tasks.length===0){
         $('#emptyTitle').textContent = 'Пока пусто';
         $('#emptySub').textContent = 'Добавьте первую задачу выше — она сохранится для вашего рабочего дня.';
-      } else if(state.q || !isDoneView){
+      } else {
         $('#emptyTitle').textContent = 'Здесь ничего нет';
         $('#emptySub').textContent = 'Попробуйте другой фильтр или добавьте новую задачу.';
       }
@@ -553,13 +535,11 @@
   }
 
   function updateSide(){
-    /* счётчики списков */
     const open = state.tasks.filter(t=>!t.done);
     $$('[data-cnt]').forEach(el=>{
       const k = el.dataset.cnt;
       el.textContent = k==='all' ? open.length : open.filter(t=>t.list===k).length;
     });
-    /* кольцо прогресса (в рамках выбранного списка) */
     const scope = state.tasks.filter(t=>state.list==='all' || t.list===state.list);
     const total = scope.length, done = scope.filter(t=>t.done).length;
     const pct = total ? done/total : 0, C = 326.7;
@@ -580,7 +560,6 @@
     $('#chipOver').textContent = 'просрочено · ' + overN;
   }
 
-  /* ── тост ── */
   function toast(msg, actLabel, actFn){
     const t = $('#toast');
     $('#toastMsg').textContent = msg;
@@ -593,7 +572,6 @@
     toastTimer = setTimeout(()=>t.classList.remove('show'), 5000);
   }
 
-  /* ── конфетти ── */
   function confetti(){
     const box = $('#confetti');
     const colors = ['#FFB424','#E5484D','#2E63E0','#12A06B','#0F1B2D'];
@@ -608,7 +586,6 @@
     setTimeout(()=>{ box.innerHTML=''; }, 4200);
   }
 
-  /* ── композер ── */
   function syncQuick(){
     composer.date = $('#dateInp').value;
     $$('.qchip[data-q]').forEach(b=>{
@@ -644,7 +621,6 @@
   });
   $('#selList').addEventListener('change', e=>{ composer.list = e.target.value; });
 
-  /* ── фильтры и поиск ── */
   $('#filterChips').addEventListener('click', e=>{
     const b = e.target.closest('.chip'); if(!b) return;
     state.filter = b.dataset.f;
@@ -666,7 +642,6 @@
     toast('Очищено задач: ' + removed.length, 'Отменить', ()=>{ state.tasks.push(...removed); save(); render(); });
   });
 
-  /* ── полуночное обновление (чтобы даты не устаревали) ── */
   let curDay = todayStr();
   setInterval(()=>{ tick(); if(todayStr()!==curDay){ curDay=todayStr(); setDate(); render(); } }, 1000);
 
@@ -674,17 +649,21 @@
   setDate(); tick(); buildLists(); buildSelList(); render();
   $('#titleInp').focus();
 
-  /* ── облачная синхронизация ── */
+  /* ============================================================
+     СИНХРОНИЗАЦИЯ ▼▼▼
+     Замени шесть строк "ВСТАВЬ_СЮДА" на свой блок firebaseConfig,
+     скопированный из Firebase (Project settings → Your apps)
+     ============================================================ */
   try{
-    const firebaseConfig =  {
-  apiKey: "AIzaSyBHQOc7gWOlTFdJ37-0FgJ6wYKDE-yXojo",
-  authDomain: "my-todo-eead0.firebaseapp.com",
-  projectId: "my-todo-eead0",
-  storageBucket: "my-todo-eead0.firebasestorage.app",
-  messagingSenderId: "93201171571",
-  appId: "1:93201171571:web:eab3623044e4a248e1d606",
-  measurementId: "G-DLM75CNSBB"
-};
+    const firebaseConfig = {
+      apiKey: "AIzaSyBHQOc7gWOlTFdJ37-0FgJ6wYKDE-yXojo",
+      authDomain: "my-todo-eead0.firebaseapp.com",
+      projectId: "my-todo-eead0",
+      storageBucket: "my-todo-eead0.firebasestorage.app",
+      messagingSenderId: "93201171571",
+      appId: "1:93201171571:web:eab3623044e4a248e1d606",
+      measurementId: "G-DLM75CNSBB"
+    };
     firebase.initializeApp(firebaseConfig);
     const __ref = firebase.firestore().collection('todolist').doc('state');
     window.__cloudRef = __ref;
@@ -694,13 +673,8 @@
       try{ localStorage.setItem(LS, JSON.stringify(state.tasks)); }catch(e){}
       render();
     }, function(){});
-  }catch(e){ console.warn('синхронизация недоступна', e); }
+  }catch(e){ console.warn('Синхронизация не подключилась:', e); }
 })();
 </script>
-<script>
-if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');
-</script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 </body>
 </html>
