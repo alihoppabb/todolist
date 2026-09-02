@@ -3,8 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Фокус — рабочий планировщик задач с синхронизацией и офлайн-режимом">
+<meta name="theme-color" content="#0F1B2D" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#1a1a2e" media="(prefers-color-scheme: dark)">
 <title>Фокус — рабочий планировщик</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✳️</text></svg>">
+<link rel="manifest" href="./manifest.json">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;800&family=Golos+Text:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
@@ -13,6 +17,12 @@
     --paper:#EEF1F5; --card:#FFFFFF; --ink:#0F1B2D; --ink2:#54637A; --line:rgba(15,27,45,.15);
     --amber:#FFB424; --coral:#E5484D; --green:#12A06B; --blue:#2E63E0; --orange:#F59E0B;
     --disp:'Unbounded',sans-serif; --body:'Golos Text',sans-serif; --mono:'JetBrains Mono',monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --paper:#0f1419; --card:#1a1a2e; --ink:#e8eef4; --ink2:#9aa6b8; --line:rgba(232,238,244,.15);
+      --amber:#ffb424; --coral:#ff6b6b; --green:#12a06b; --blue:#4a7dff; --orange:#f59e0b;
+    }
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth}
@@ -239,16 +249,16 @@
           <div id="listsBox" style="display:contents"></div>
         </div>
 
-        <div class="card tip">
-          <b>Подсказки:</b> ⏎ — добавить · двойной клик по тексту — редактировать · тяни за ⠿, чтобы поменять порядок · <b>/</b> — поиск
+        <div class="card tip" role="note" aria-label="Подсказки">
+          <b>Подсказки:</b> ⏎ — добавить · двойной клик по тексту — редактировать · тяни за ⠿, чтобы поменять порядок · <b>/</b> — поиск · Ctrl+N — новая задача
         </div>
       </aside>
 
       <main class="main">
-        <form class="card composer" id="composer" autocomplete="off">
+        <form class="card composer" id="composer" autocomplete="off" role="search" aria-label="Добавление задачи">
           <div class="c-row1">
-            <span class="plus">+</span>
-            <input id="titleInp" type="text" maxlength="140" placeholder="Что нужно сделать? Например: отправить отчёт до пятницы">
+            <span class="plus" aria-hidden="true">+</span>
+            <input id="titleInp" type="text" maxlength="140" placeholder="Что нужно сделать? Например: отправить отчёт до пятницы" aria-label="Название задачи">
             <button class="btn-add" type="submit">Добавить <span class="btn-key">⏎</span></button>
           </div>
           <div class="c-row2">
@@ -263,22 +273,22 @@
                 <button type="button" data-p="mid" class="on">Средний</button>
                 <button type="button" data-p="high">Срочно</button>
               </div>
-              <select id="selList"></select>
-              <input type="date" id="dateInp" title="Срок">
+              <select id="selList" aria-label="Выбрать список"></select>
+              <input type="date" id="dateInp" title="Срок" aria-label="Дата выполнения">
             </div>
           </div>
         </form>
 
-        <div class="toolbar">
-          <div class="chips" id="filterChips">
-            <button class="chip on" data-f="all">Все</button>
-            <button class="chip" data-f="today">Сегодня</button>
-            <button class="chip" data-f="plan">Запланировано</button>
-            <button class="chip" data-f="done">Готово</button>
+        <div class="toolbar" role="toolbar" aria-label="Фильтры и поиск">
+          <div class="chips" id="filterChips" role="group" aria-label="Фильтры задач">
+            <button class="chip on" data-f="all" aria-pressed="true">Все</button>
+            <button class="chip" data-f="today" aria-pressed="false">Сегодня</button>
+            <button class="chip" data-f="plan" aria-pressed="false">Запланировано</button>
+            <button class="chip" data-f="done" aria-pressed="false">Готово</button>
           </div>
-          <label class="search">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-            <input id="searchInp" type="text" placeholder="Поиск…  ( / )">
+          <label class="search" aria-label="Поиск задач">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+            <input id="searchInp" type="text" placeholder="Поиск…  ( / )" aria-label="Поиск задач">
           </label>
         </div>
 
@@ -310,8 +320,9 @@
     <footer class="foot">данные хранятся в облаке и локально · фокус © 2026</footer>
   </div>
 
-  <div class="toast" id="toast"><span id="toastMsg"></span><button id="toastAct" hidden></button></div>
-  <div id="confetti"></div>
+  <div class="toast" id="toast" role="alert" aria-live="polite"><span id="toastMsg"></span><button id="toastAct" hidden></button></div>
+  <div id="confetti" aria-hidden="true"></div>
+  <div id="onlineStatus" class="hchip" hidden style="position:fixed;bottom:10px;right:10px;z-index:100">Офлайн</div>
 
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
@@ -415,20 +426,20 @@
   }
   function taskHTML(t){
     const dm = dateMeta(t);
-    return '<li class="task'+(t.done?' is-done':'')+'" data-id="'+t.id+'" style="--pc:'+PRIO[t.priority].color+'">'
-      + '<span class="handle" title="Перетащить">⠿</span>'
-      + '<button class="check" role="checkbox" aria-checked="'+t.done+'" title="Отметить"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.2 4.2L19 7"/></svg></button>'
+    return '<li class="task'+(t.done?' is-done':'')+'" data-id="'+t.id+'" style="--pc:'+PRIO[t.priority].color+'" role="listitem" aria-label="Задача: '+esc(t.title)+'">'
+      + '<span class="handle" title="Перетащить" aria-hidden="true">⠿</span>'
+      + '<button class="check" role="checkbox" aria-checked="'+t.done+'" title="Отметить" aria-label="Отметить задачу"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.2 4.2L19 7"/></svg></button>'
       + '<div class="t-body">'
-      +   '<span class="ttl">'+esc(t.title)+'</span>'
-      +   '<div class="meta">'
+      +   '<span class="ttl" tabindex="0" role="button" aria-label="Двойной клик для редактирования">'+esc(t.title)+'</span>'
+      +   '<div class="meta" aria-label="Метаданные задачи">'
       +     '<span class="m"><i style="background:'+LISTS[t.list].color+'"></i>'+LISTS[t.list].name+'</span>'
       +     (dm ? '<span class="m m-date '+dm.cls+'"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>'+dm.label+'</span>' : '')
-      +     '<span class="m m-prio"><i></i>'+PRIO[t.priority].label+'</span>'
+      +     '<span class="m m-prio" aria-label="Приоритет: '+PRIO[t.priority].label+'"><i></i>'+PRIO[t.priority].label+'</span>'
       +   '</div>'
       + '</div>'
-      + '<div class="acts">'
-      +   '<button class="act act-edit" title="Редактировать"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></button>'
-      +   '<button class="act act-del" title="Удалить"><svg viewBox="0 0 24 24"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14M10 11v6M14 11v6"/></svg></button>'
+      + '<div class="acts" aria-label="Действия">'
+      +   '<button class="act act-edit" title="Редактировать" aria-label="Редактировать задачу"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></button>'
+      +   '<button class="act act-del" title="Удалить" aria-label="Удалить задачу"><svg viewBox="0 0 24 24"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14M10 11v6M14 11v6"/></svg></button>'
       + '</div></li>';
   }
 
@@ -437,6 +448,7 @@
     li.querySelector('.act-del').addEventListener('click', ()=>delTask(t.id));
     li.querySelector('.act-edit').addEventListener('click', ()=>editTask(t.id, li));
     li.querySelector('.ttl').addEventListener('dblclick', ()=>editTask(t.id, li));
+    li.querySelector('.ttl').addEventListener('keydown', e=>{ if(e.key==='Enter'||e.key===' ') editTask(t.id, li); });
     const handle = li.querySelector('.handle');
     handle.addEventListener('mousedown', ()=>{ li.draggable = true; });
     li.addEventListener('dragstart', e=>{
@@ -448,6 +460,14 @@
     li.addEventListener('dragover', e=>{ if(dragId && dragId!==t.id){ e.preventDefault(); li.classList.add('over'); } });
     li.addEventListener('dragleave', ()=>li.classList.remove('over'));
     li.addEventListener('drop', e=>{ e.preventDefault(); reorder(dragId, t.id); });
+    // Touch events для мобильных
+    let touchStartY = 0, touchMoved = false;
+    handle.addEventListener('touchstart', e=>{ touchStartY = e.touches[0].clientY; touchMoved = false; }, {passive:true});
+    handle.addEventListener('touchmove', e=>{ touchMoved = true; }, {passive:true});
+    handle.addEventListener('touchend', e=>{
+      if(touchMoved) return;
+      // Эмуляция клика для открытия меню (если нужно)
+    });
   }
 
   function reorder(fromId, toId){
@@ -632,6 +652,8 @@
     const tag = document.activeElement && document.activeElement.tagName;
     if(e.key==='/' && !/INPUT|TEXTAREA|SELECT/.test(tag)){ e.preventDefault(); $('#searchInp').focus(); }
     if(e.key==='Escape' && document.activeElement===$('#searchInp')){ $('#searchInp').value=''; state.q=''; render(); document.activeElement.blur(); }
+    // Горячие клавиши: Ctrl+N - фокус на новую задачу
+    if((e.ctrlKey || e.metaKey) && e.key==='n'){ e.preventDefault(); $('#titleInp').focus(); }
   });
 
   $('#clearDone').addEventListener('click', ()=>{
@@ -644,6 +666,23 @@
 
   let curDay = todayStr();
   setInterval(()=>{ tick(); if(todayStr()!==curDay){ curDay=todayStr(); setDate(); render(); } }, 1000);
+
+  /* ── офлайн-индикатор ── */
+  function updateOnlineStatus(){
+    const el = $('#onlineStatus');
+    el.hidden = navigator.onLine;
+    el.textContent = 'Офлайн';
+  }
+  window.addEventListener('online', updateOnlineStatus);
+  window.addEventListener('offline', updateOnlineStatus);
+  updateOnlineStatus();
+
+  /* ── регистрация Service Worker ── */
+  if('serviceWorker' in navigator){
+    navigator.serviceWorker.register('./sw.js')
+      .then(reg => console.log('SW зарегистрирован:', reg.scope))
+      .catch(err => console.warn('SW не зарегистрировался:', err));
+  }
 
   /* ── старт ── */
   setDate(); tick(); buildLists(); buildSelList(); render();
